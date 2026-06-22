@@ -1,0 +1,142 @@
+{
+    "kind": "youtube#liveChatMessageListResponse",
+    "etag": "r6RZKzUe_xmhhwJ6KNioIvqJass",
+    "pollingIntervalMillis": 4835,
+    "pageInfo": {
+        "totalResults": 68,
+        "resultsPerPage": 5
+    },
+    "nextPageToken": "GMfPv9P9mpUDIJGKhYv_mpUD",
+    "items": [
+        {
+            "kind": "youtube#liveChatMessage",
+            "etag": "Yjd9ah7RY2i1Hv6M35Ycvv7xPbg",
+            "id": "LCC.EhwKGkNNX1g5OGI5bXBVREZVcm5Qd1FkdnI4bFVR",
+            "snippet": {
+                "type": "textMessageEvent",
+                "liveChatId": "Cg0KC2NiMTJLbU1NREpBKicKGFVDajZQY3lMdnBuSVJUXzJXX213YTlBdxILY2IxMkttTU1ESkE",
+                "authorChannelId": "UCNyyICh3MMHF-LtabMx3EOw",
+                "publishedAt": "2026-06-22T13:44:53.38959+00:00",
+                "hasDisplayContent": true,
+                "displayMessage": "BAMO MECI",
+                "textMessageDetails": {
+                    "messageText": "BAMO MECI"
+                }
+            },
+            "authorDetails": {
+                "channelId": "UCNyyICh3MMHF-LtabMx3EOw",
+                "channelUrl": "http://www.youtube.com/channel/UCNyyICh3MMHF-LtabMx3EOw",
+                "displayName": "@axel_kicidown",
+                "profileImageUrl": "https://yt3.ggpht.com/ytc/AIdro_nATaj_XyZ449yTpyY9GNkkpedOEjet8B9ru95ikqwS3Mf-MXvcS1UlV0t6a5VEu6AwMQ=s88-c-k-c0x00ffffff-no-rj",
+                "isVerified": false,
+                "isChatOwner": false,
+                "isChatSponsor": false,
+                "isChatModerator": false
+            }
+        },
+        {
+            "kind": "youtube#liveChatMessage",
+            "etag": "eBiS00mNIL4bRABQMWFioLCNCPU",
+            "id": "LCC.EhwKGkNMV3hnY2o5bXBVREZmNkpMUWtkZGxzT3lR",
+            "snippet": {
+                "type": "textMessageEvent",
+                "liveChatId": "Cg0KC2NiMTJLbU1NREpBKicKGFVDajZQY3lMdnBuSVJUXzJXX213YTlBdxILY2IxMkttTU1ESkE",
+                "authorChannelId": "UCLQhS9cO8I8nDPuTy_u6brg",
+                "publishedAt": "2026-06-22T13:44:55.646613+00:00",
+                "hasDisplayContent": true,
+                "displayMessage": "están haciendo ejércitos de soldados extranjeros en toda Latinoamérica",
+                "textMessageDetails": {
+                    "messageText": "están haciendo ejércitos de soldados extranjeros en toda Latinoamérica"
+                }
+            },
+            "authorDetails": {
+                "channelId": "UCLQhS9cO8I8nDPuTy_u6brg",
+                "channelUrl": "http://www.youtube.com/channel/UCLQhS9cO8I8nDPuTy_u6brg",
+                "displayName": "@Lina-k2o9t",
+                "profileImageUrl": "https://yt3.ggpht.com/ytc/AIdro_lTVeac9TBBd07-AHzhpJtJaLgoqVGs9xKCtVA_W9cscirrK8ltE9feTCBKXtWrgp2aHQ=s88-c-k-c0x00ffffff-no-rj",
+                "isVerified": false,
+                "isChatOwner": false,
+                "isChatSponsor": false,
+                "isChatModerator": false
+            }
+        },
+        {
+            "kind": "youtube#liveChatMessage",
+            "etag": "s-uN0Il_4xIUvIf-Tr9AJmrdUUs",
+            "id": "LCC.EhwKGkNQWGQxOHo5bXBVREZaSHBQd1FkMGdFcm9B",
+            "snippet": {
+                "type": "textMessageEvent",
+                "liveChatId": "Cg0KC2NiMTJLbU1NREpBKicKGFVDajZQY3lMdnBuSVJUXzJXX213YTlBdxILY2IxMkttTU1ESkE",
+                "authorChannelId": "UCEzdl0dzAKWsdrntNQep-Lw",
+                "publishedAt": "2026-06-22T13:45:05.449221+00:00",
+                "hasDisplayContent": true,
+                "displayMessage": "@Lina-k2o9t HAHAHHA XD SIN ARGUMENTOS XD",
+                "textMessageDetails": {
+                    "messageText": "@Lina-k2o9t HAHAHHA XD SIN ARGUMENTOS XD"
+                }
+            },
+            "authorDetails": {
+                "channelId": "UCEzdl0dzAKWsdrntNQep-Lw",
+                "channelUrl": "http://www.youtube.com/channel/UCEzdl0dzAKWsdrntNQep-Lw",
+                "displayName": "@baltojuniorwolfer3662",
+                "profileImageUrl": "https://yt3.ggpht.com/Y9a-PghuxW0BHiWRZ6Vw4d7qCRmneCoOKEfsnlSHEYgpIJ0STD2WGn2zTU3GnznmlfFd9ORLFA=s88-c-k-c0x00ffffff-no-rj",
+                "isVerified": false,
+                "isChatOwner": false,
+                "isChatSponsor": false,
+                "isChatModerator": false
+            }
+        },
+        {
+            "kind": "youtube#liveChatMessage",
+            "etag": "nQQ99ndXLY5OLiTREZOsaZzVxu8",
+            "id": "LCC.EhwKGkNJVHR6dEg5bXBVREZjNU5xd0lkZ0NBcUJR",
+            "snippet": {
+                "type": "textMessageEvent",
+                "liveChatId": "Cg0KC2NiMTJLbU1NREpBKicKGFVDajZQY3lMdnBuSVJUXzJXX213YTlBdxILY2IxMkttTU1ESkE",
+                "authorChannelId": "UCLQhS9cO8I8nDPuTy_u6brg",
+                "publishedAt": "2026-06-22T13:45:15.791108+00:00",
+                "hasDisplayContent": true,
+                "displayMessage": "nos quieren controlar como cuando los golpes de estado",
+                "textMessageDetails": {
+                    "messageText": "nos quieren controlar como cuando los golpes de estado"
+                }
+            },
+            "authorDetails": {
+                "channelId": "UCLQhS9cO8I8nDPuTy_u6brg",
+                "channelUrl": "http://www.youtube.com/channel/UCLQhS9cO8I8nDPuTy_u6brg",
+                "displayName": "@Lina-k2o9t",
+                "profileImageUrl": "https://yt3.ggpht.com/ytc/AIdro_lTVeac9TBBd07-AHzhpJtJaLgoqVGs9xKCtVA_W9cscirrK8ltE9feTCBKXtWrgp2aHQ=s88-c-k-c0x00ffffff-no-rj",
+                "isVerified": false,
+                "isChatOwner": false,
+                "isChatSponsor": false,
+                "isChatModerator": false
+            }
+        },
+        {
+            "kind": "youtube#liveChatMessage",
+            "etag": "IEkALR_pqdvtSVm-PB-R32xyxBE",
+            "id": "LCC.EhwKGkNMYTd2OVA5bXBVREZVN0VQd1FkNzFRSWFB",
+            "snippet": {
+                "type": "textMessageEvent",
+                "liveChatId": "Cg0KC2NiMTJLbU1NREpBKicKGFVDajZQY3lMdnBuSVJUXzJXX213YTlBdxILY2IxMkttTU1ESkE",
+                "authorChannelId": "UCEzdl0dzAKWsdrntNQep-Lw",
+                "publishedAt": "2026-06-22T13:45:19.732679+00:00",
+                "hasDisplayContent": true,
+                "displayMessage": "@Lina-k2o9t KUKA ANTIPATRIA",
+                "textMessageDetails": {
+                    "messageText": "@Lina-k2o9t KUKA ANTIPATRIA"
+                }
+            },
+            "authorDetails": {
+                "channelId": "UCEzdl0dzAKWsdrntNQep-Lw",
+                "channelUrl": "http://www.youtube.com/channel/UCEzdl0dzAKWsdrntNQep-Lw",
+                "displayName": "@baltojuniorwolfer3662",
+                "profileImageUrl": "https://yt3.ggpht.com/Y9a-PghuxW0BHiWRZ6Vw4d7qCRmneCoOKEfsnlSHEYgpIJ0STD2WGn2zTU3GnznmlfFd9ORLFA=s88-c-k-c0x00ffffff-no-rj",
+                "isVerified": false,
+                "isChatOwner": false,
+                "isChatSponsor": false,
+                "isChatModerator": false
+            }
+        }
+    ]
+}

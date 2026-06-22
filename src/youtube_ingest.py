@@ -1,6 +1,7 @@
 from dotenv import load_dotenv
 import os
 import requests
+import json
 
 load_dotenv()
 
@@ -61,6 +62,11 @@ chat_response = requests.get(chat_url, params=chat_params)
 print("Chat status:", chat_response.status_code)
 
 chat_data = chat_response.json()
+
+with open("raw/comments.json", "w", encoding="utf-8") as file:
+    json.dump(chat_data, file, ensure_ascii=False, indent=4)
+
+print("Raw comments saved to raw/comments.json")
 
 messages = chat_data["items"]
 
