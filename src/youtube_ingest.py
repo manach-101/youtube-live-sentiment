@@ -1,6 +1,8 @@
+from ingestion.youtube import get_video_metadata
 from config.settings import YOUTUBE_API_KEY
+from storage.raw_writer import save_raw_json
+
 import requests
-import json
 
 
 video_id = "cb12KmMMDJA"
@@ -15,7 +17,7 @@ params = {
     "key": YOUTUBE_API_KEY
 }
 
-response = requests.get(url, params=params)
+response = get_video_metadata(url, params)
 
 print("Video status:", response.status_code)
 
@@ -59,10 +61,13 @@ print("Chat status:", chat_response.status_code)
 
 chat_data = chat_response.json()
 
-with open("raw/comments.json", "w", encoding="utf-8") as file:
-    json.dump(chat_data, file, ensure_ascii=False, indent=4)
+saved_path = save_raw_json(
+    data=chat_data,
+    source="youtube_comments"
+)
 
-print("Raw comments saved to raw/comments.json")
+print(f"Raw comments saved to {saved_path}")
+
 
 messages = chat_data["items"]
 
