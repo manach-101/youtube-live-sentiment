@@ -1,33 +1,33 @@
 {
     "kind": "youtube#liveChatMessageListResponse",
-    "etag": "r6RZKzUe_xmhhwJ6KNioIvqJass",
-    "pollingIntervalMillis": 4835,
+    "etag": "_c6vHFDymP7DpWRfcDukvB3XixA",
+    "pollingIntervalMillis": 5238,
     "pageInfo": {
         "totalResults": 68,
         "resultsPerPage": 5
     },
-    "nextPageToken": "GMfPv9P9mpUDIJGKhYv_mpUD",
+    "nextPageToken": "GNGmsrSCspUDIK_Gm-aDspUD",
     "items": [
         {
             "kind": "youtube#liveChatMessage",
-            "etag": "Yjd9ah7RY2i1Hv6M35Ycvv7xPbg",
-            "id": "LCC.EhwKGkNNX1g5OGI5bXBVREZVcm5Qd1FkdnI4bFVR",
+            "etag": "i-qZoFiPh8spqtG4Q5lAjFwcK9c",
+            "id": "LCC.EhwKGkNJcXFtNjZDc3BVREZYSEw1d01kUVZnVnNB",
             "snippet": {
                 "type": "textMessageEvent",
                 "liveChatId": "Cg0KC2NiMTJLbU1NREpBKicKGFVDajZQY3lMdnBuSVJUXzJXX213YTlBdxILY2IxMkttTU1ESkE",
-                "authorChannelId": "UCNyyICh3MMHF-LtabMx3EOw",
-                "publishedAt": "2026-06-22T13:44:53.38959+00:00",
+                "authorChannelId": "UCGYJLnGe8Yt24HyDAPUCfVw",
+                "publishedAt": "2026-07-01T17:37:37.706494+00:00",
                 "hasDisplayContent": true,
-                "displayMessage": "BAMO MECI",
+                "displayMessage": "zorrito",
                 "textMessageDetails": {
-                    "messageText": "BAMO MECI"
+                    "messageText": "zorrito"
                 }
             },
             "authorDetails": {
-                "channelId": "UCNyyICh3MMHF-LtabMx3EOw",
-                "channelUrl": "http://www.youtube.com/channel/UCNyyICh3MMHF-LtabMx3EOw",
-                "displayName": "@axel_kicidown",
-                "profileImageUrl": "https://yt3.ggpht.com/ytc/AIdro_nATaj_XyZ449yTpyY9GNkkpedOEjet8B9ru95ikqwS3Mf-MXvcS1UlV0t6a5VEu6AwMQ=s88-c-k-c0x00ffffff-no-rj",
+                "channelId": "UCGYJLnGe8Yt24HyDAPUCfVw",
+                "channelUrl": "http://www.youtube.com/channel/UCGYJLnGe8Yt24HyDAPUCfVw",
+                "displayName": "@Futurebb-cj6vs",
+                "profileImageUrl": "https://yt3.ggpht.com/-cOWjCL6xAUiozGl8bVWCYlK0Hk_eQqXJh-rArnm4YY8QmJFLX-JbwG7ZxP8xi1M7m0xX2tWvA=s88-c-k-c0x00ffffff-no-rj",
                 "isVerified": false,
                 "isChatOwner": false,
                 "isChatSponsor": false,
@@ -36,24 +36,24 @@
         },
         {
             "kind": "youtube#liveChatMessage",
-            "etag": "eBiS00mNIL4bRABQMWFioLCNCPU",
-            "id": "LCC.EhwKGkNMV3hnY2o5bXBVREZmNkpMUWtkZGxzT3lR",
+            "etag": "ijC7QIrQQx7F6jjm9zENxrYhsXc",
+            "id": "LCC.EhwKGkNPV1QzYTZDc3BVREZiN1Y1d01kZmtZU05B",
             "snippet": {
                 "type": "textMessageEvent",
                 "liveChatId": "Cg0KC2NiMTJLbU1NREpBKicKGFVDajZQY3lMdnBuSVJUXzJXX213YTlBdxILY2IxMkttTU1ESkE",
-                "authorChannelId": "UCLQhS9cO8I8nDPuTy_u6brg",
-                "publishedAt": "2026-06-22T13:44:55.646613+00:00",
+                "authorChannelId": "UCHDh4eE0nTH-Ikgn6Mo2ahQ",
+                "publishedAt": "2026-07-01T17:37:38.784408+00:00",
                 "hasDisplayContent": true,
-                "displayMessage": "están haciendo ejércitos de soldados extranjeros en toda Latinoamérica",
+                "displayMessage": "hola general",
                 "textMessageDetails": {
-                    "messageText": "están haciendo ejércitos de soldados extranjeros en toda Latinoamérica"
+                    "messageText": "hola general"
                 }
             },
             "authorDetails": {
-                "channelId": "UCLQhS9cO8I8nDPuTy_u6brg",
-                "channelUrl": "http://www.youtube.com/channel/UCLQhS9cO8I8nDPuTy_u6brg",
-                "displayName": "@Lina-k2o9t",
-                "profileImageUrl": "https://yt3.ggpht.com/ytc/AIdro_lTVeac9TBBd07-AHzhpJtJaLgoqVGs9xKCtVA_W9cscirrK8ltE9feTCBKXtWrgp2aHQ=s88-c-k-c0x00ffffff-no-rj",
+                "channelId": "UCHDh4eE0nTH-Ikgn6Mo2ahQ",
+                "channelUrl": "http://www.youtube.com/channel/UCHDh4eE0nTH-Ikgn6Mo2ahQ",
+                "displayName": "@Kuinsent",
+                "profileImageUrl": "https://yt3.ggpht.com/RtfC--r_YOp2WSThoi5kA1mL1haPqlEU1Nh59FrekwzeB7Bk32vumC-0TdnG9ODCt6Ax3PZMmg=s88-c-k-c0x00ffffff-no-rj",
                 "isVerified": false,
                 "isChatOwner": false,
                 "isChatSponsor": false,
@@ -62,24 +62,24 @@
         },
         {
             "kind": "youtube#liveChatMessage",
-            "etag": "s-uN0Il_4xIUvIf-Tr9AJmrdUUs",
-            "id": "LCC.EhwKGkNQWGQxOHo5bXBVREZaSHBQd1FkMGdFcm9B",
+            "etag": "x5RByxPThoQ4ANYT20Y_uVKow08",
+            "id": "LCC.EhwKGkNKdUtyNi1Dc3BVREZTSWhkZ1lkVmxJOTNn",
             "snippet": {
                 "type": "textMessageEvent",
                 "liveChatId": "Cg0KC2NiMTJLbU1NREpBKicKGFVDajZQY3lMdnBuSVJUXzJXX213YTlBdxILY2IxMkttTU1ESkE",
-                "authorChannelId": "UCEzdl0dzAKWsdrntNQep-Lw",
-                "publishedAt": "2026-06-22T13:45:05.449221+00:00",
+                "authorChannelId": "UCdffj5abVDM87B8fy455DTQ",
+                "publishedAt": "2026-07-01T17:37:40.126926+00:00",
                 "hasDisplayContent": true,
-                "displayMessage": "@Lina-k2o9t HAHAHHA XD SIN ARGUMENTOS XD",
+                "displayMessage": "MIREN LOS APELLIDOS EL RIDÍCULO NO HAY UN SOLO ARGENTINO EN LOS MEDIOS",
                 "textMessageDetails": {
-                    "messageText": "@Lina-k2o9t HAHAHHA XD SIN ARGUMENTOS XD"
+                    "messageText": "MIREN LOS APELLIDOS EL RIDÍCULO NO HAY UN SOLO ARGENTINO EN LOS MEDIOS"
                 }
             },
             "authorDetails": {
-                "channelId": "UCEzdl0dzAKWsdrntNQep-Lw",
-                "channelUrl": "http://www.youtube.com/channel/UCEzdl0dzAKWsdrntNQep-Lw",
-                "displayName": "@baltojuniorwolfer3662",
-                "profileImageUrl": "https://yt3.ggpht.com/Y9a-PghuxW0BHiWRZ6Vw4d7qCRmneCoOKEfsnlSHEYgpIJ0STD2WGn2zTU3GnznmlfFd9ORLFA=s88-c-k-c0x00ffffff-no-rj",
+                "channelId": "UCdffj5abVDM87B8fy455DTQ",
+                "channelUrl": "http://www.youtube.com/channel/UCdffj5abVDM87B8fy455DTQ",
+                "displayName": "@INRI.G6308",
+                "profileImageUrl": "https://yt3.ggpht.com/VxWR9ryC3lxx_jYmELNztaVAjqGUU_b-XzM5Y3sWTE7ibA5XUgzfnuyy0031sCpiEsx9iWsIZTk=s88-c-k-c0x00ffffff-no-rj",
                 "isVerified": false,
                 "isChatOwner": false,
                 "isChatSponsor": false,
@@ -88,24 +88,24 @@
         },
         {
             "kind": "youtube#liveChatMessage",
-            "etag": "nQQ99ndXLY5OLiTREZOsaZzVxu8",
-            "id": "LCC.EhwKGkNJVHR6dEg5bXBVREZjNU5xd0lkZ0NBcUJR",
+            "etag": "Hi8FGifP89venUfhO_wdjXtPx2o",
+            "id": "LCC.EhwKGkNJYVZwN0dDc3BVREZRZ1J6QVFkWkk0Z1Rn",
             "snippet": {
                 "type": "textMessageEvent",
                 "liveChatId": "Cg0KC2NiMTJLbU1NREpBKicKGFVDajZQY3lMdnBuSVJUXzJXX213YTlBdxILY2IxMkttTU1ESkE",
-                "authorChannelId": "UCLQhS9cO8I8nDPuTy_u6brg",
-                "publishedAt": "2026-06-22T13:45:15.791108+00:00",
+                "authorChannelId": "UCGYJLnGe8Yt24HyDAPUCfVw",
+                "publishedAt": "2026-07-01T17:37:44.191214+00:00",
                 "hasDisplayContent": true,
-                "displayMessage": "nos quieren controlar como cuando los golpes de estado",
+                "displayMessage": "hace una llamita como de hornalla no mas",
                 "textMessageDetails": {
-                    "messageText": "nos quieren controlar como cuando los golpes de estado"
+                    "messageText": "hace una llamita como de hornalla no mas"
                 }
             },
             "authorDetails": {
-                "channelId": "UCLQhS9cO8I8nDPuTy_u6brg",
-                "channelUrl": "http://www.youtube.com/channel/UCLQhS9cO8I8nDPuTy_u6brg",
-                "displayName": "@Lina-k2o9t",
-                "profileImageUrl": "https://yt3.ggpht.com/ytc/AIdro_lTVeac9TBBd07-AHzhpJtJaLgoqVGs9xKCtVA_W9cscirrK8ltE9feTCBKXtWrgp2aHQ=s88-c-k-c0x00ffffff-no-rj",
+                "channelId": "UCGYJLnGe8Yt24HyDAPUCfVw",
+                "channelUrl": "http://www.youtube.com/channel/UCGYJLnGe8Yt24HyDAPUCfVw",
+                "displayName": "@Futurebb-cj6vs",
+                "profileImageUrl": "https://yt3.ggpht.com/-cOWjCL6xAUiozGl8bVWCYlK0Hk_eQqXJh-rArnm4YY8QmJFLX-JbwG7ZxP8xi1M7m0xX2tWvA=s88-c-k-c0x00ffffff-no-rj",
                 "isVerified": false,
                 "isChatOwner": false,
                 "isChatSponsor": false,
@@ -114,24 +114,24 @@
         },
         {
             "kind": "youtube#liveChatMessage",
-            "etag": "IEkALR_pqdvtSVm-PB-R32xyxBE",
-            "id": "LCC.EhwKGkNMYTd2OVA5bXBVREZVN0VQd1FkNzFRSWFB",
+            "etag": "L0WlIsMzjm25UPLdrx7g5a-Y2Vc",
+            "id": "LCC.EhwKGkNNWFhzYlNDc3BVREZZYno1d01kWHNjemZn",
             "snippet": {
                 "type": "textMessageEvent",
                 "liveChatId": "Cg0KC2NiMTJLbU1NREpBKicKGFVDajZQY3lMdnBuSVJUXzJXX213YTlBdxILY2IxMkttTU1ESkE",
-                "authorChannelId": "UCEzdl0dzAKWsdrntNQep-Lw",
-                "publishedAt": "2026-06-22T13:45:19.732679+00:00",
+                "authorChannelId": "UCdffj5abVDM87B8fy455DTQ",
+                "publishedAt": "2026-07-01T17:37:50.662481+00:00",
                 "hasDisplayContent": true,
-                "displayMessage": "@Lina-k2o9t KUKA ANTIPATRIA",
+                "displayMessage": "DIME QUIÉN TE INFORMA Y TE DIRÉ LO QUE SABES",
                 "textMessageDetails": {
-                    "messageText": "@Lina-k2o9t KUKA ANTIPATRIA"
+                    "messageText": "DIME QUIÉN TE INFORMA Y TE DIRÉ LO QUE SABES"
                 }
             },
             "authorDetails": {
-                "channelId": "UCEzdl0dzAKWsdrntNQep-Lw",
-                "channelUrl": "http://www.youtube.com/channel/UCEzdl0dzAKWsdrntNQep-Lw",
-                "displayName": "@baltojuniorwolfer3662",
-                "profileImageUrl": "https://yt3.ggpht.com/Y9a-PghuxW0BHiWRZ6Vw4d7qCRmneCoOKEfsnlSHEYgpIJ0STD2WGn2zTU3GnznmlfFd9ORLFA=s88-c-k-c0x00ffffff-no-rj",
+                "channelId": "UCdffj5abVDM87B8fy455DTQ",
+                "channelUrl": "http://www.youtube.com/channel/UCdffj5abVDM87B8fy455DTQ",
+                "displayName": "@INRI.G6308",
+                "profileImageUrl": "https://yt3.ggpht.com/VxWR9ryC3lxx_jYmELNztaVAjqGUU_b-XzM5Y3sWTE7ibA5XUgzfnuyy0031sCpiEsx9iWsIZTk=s88-c-k-c0x00ffffff-no-rj",
                 "isVerified": false,
                 "isChatOwner": false,
                 "isChatSponsor": false,

@@ -1,11 +1,7 @@
-from dotenv import load_dotenv
-import os
+from config.settings import YOUTUBE_API_KEY
 import requests
 import json
 
-load_dotenv()
-
-api_key = os.getenv("YOUTUBE_API_KEY")
 
 video_id = "cb12KmMMDJA"
 
@@ -16,7 +12,7 @@ url = "https://www.googleapis.com/youtube/v3/videos"
 params = {
     "part": "snippet,liveStreamingDetails",
     "id": video_id,
-    "key": api_key
+    "key": YOUTUBE_API_KEY
 }
 
 response = requests.get(url, params=params)
@@ -51,7 +47,7 @@ print("Published:", snippet["publishedAt"])
 chat_url = "https://www.googleapis.com/youtube/v3/liveChat/messages"
 
 chat_params = {
-    "key": api_key,
+    "key": YOUTUBE_API_KEY,
     "liveChatId": live_chat_id,
     "part": "snippet,authorDetails",
     "maxResults": 5
