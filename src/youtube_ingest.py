@@ -1,8 +1,7 @@
-from ingestion.youtube import get_video_metadata
+from ingestion.youtube import get_video_metadata, get_live_chat_messages
 from config.settings import YOUTUBE_API_KEY
 from storage.raw_writer import save_raw_json
 
-import requests
 
 
 video_id = "cb12KmMMDJA"
@@ -55,7 +54,7 @@ chat_params = {
     "maxResults": 5
 }
 
-chat_response = requests.get(chat_url, params=chat_params)
+chat_response = get_live_chat_messages(chat_url, chat_params)
 
 print("Chat status:", chat_response.status_code)
 
