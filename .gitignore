@@ -11,3 +11,5 @@ raw/
 
 # macOS
 .DS_Store
+# Generated processed and analytics data
+data/
