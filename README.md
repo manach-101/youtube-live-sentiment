@@ -130,6 +130,7 @@ The classifier is an early-stage analytical component and will evolve as more re
 
 ## Project Structure
 
+```text
 youtube-live-sentiment/
 │
 ├── src/
@@ -178,6 +179,9 @@ youtube-live-sentiment/
 ├── pytest.ini
 ├── requirements.txt
 └── README.md
+```
+
+Generated files under `raw/` and `data/` are excluded from version control.
 
 ## Tech Stack
 
