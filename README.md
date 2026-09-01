@@ -124,13 +124,19 @@ The classifier is an early-stage analytical component and will evolve as more re
 - Environment-based API key configuration
 - Modular ingestion, storage, processing, feature, and classification layers
 - Generated datasets excluded from version control
+- DuckDB-based analytical querying over Parquet datasets
+- Reusable SQL analytics for top authors, spam rate, and messages per minute
+- Automated unit tests for normalization and spam classification
 
 ## Project Structure
 
-```text
 youtube-live-sentiment/
 │
 ├── src/
+│   ├── analytics/
+│   │   ├── __init__.py
+│   │   └── queries.py
+│   │
 │   ├── classification/
 │   │   ├── __init__.py
 │   │   └── spam_classifier.py
@@ -146,29 +152,32 @@ youtube-live-sentiment/
 │   │
 │   ├── processing/
 │   │   ├── __init__.py
+│   │   ├── build_gold.py
 │   │   ├── normalize_messages.py
-│   │   ├── process_raw_files.py
-│   │   └── build_gold.py
+│   │   └── process_raw_files.py
 │   │
 │   ├── storage/
-│   │   ├── raw_writer.py
-│   │   └── parquet_writer.py
+│   │   ├── parquet_writer.py
+│   │   └── raw_writer.py
 │   │
 │   ├── main.py
 │   └── youtube_ingest.py
 │
+├── tests/
+│   ├── test_normalize_messages.py
+│   └── test_spam_classifier.py
+│
 ├── raw/
+│
 ├── data/
 │   ├── processed/
 │   └── analytics/
 │
 ├── .env.example
 ├── .gitignore
+├── pytest.ini
 ├── requirements.txt
 └── README.md
-```
-
-Generated files under `raw/` and `data/` are excluded from version control.
 
 ## Tech Stack
 
@@ -180,6 +189,8 @@ Generated files under `raw/` and `data/` are excluded from version control.
 - Pandas
 - Apache Arrow / PyArrow
 - Apache Parquet
+- DuckDB
+- Pytest
 - Regex / Unicode grapheme processing
 - Git / GitHub
 
@@ -217,6 +228,54 @@ Example output:
 ```text
 Authors summarized: 9
 Output: data/analytics/author_summary.parquet
+```
+## Running Analytics Queries
+
+The project includes reusable DuckDB queries that operate directly on the Silver Parquet dataset.
+
+Current analytical queries include:
+
+- Top authors by message count
+- Global spam summary
+- Messages per minute
+- Spam messages per minute
+
+DuckDB queries are implemented in:
+
+```text
+src/analytics/queries.py
+```
+
+Example:
+
+```python
+from src.analytics.queries import get_spam_summary
+
+print(get_spam_summary())
+```
+
+DuckDB reads the Parquet dataset directly without requiring a separate database server.
+
+## Testing
+
+The project includes automated tests using Pytest.
+
+Current test coverage includes:
+
+- Raw message normalization
+- Spam classification for suspicious behavior
+- Spam classification for normal messages
+
+Run the test suite with:
+
+```bash
+pytest -q
+```
+
+Current test result:
+
+```text
+3 passed
 ```
 
 ## Design Principles
