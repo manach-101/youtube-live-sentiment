@@ -18,6 +18,8 @@ if __package__ in (None, ""):  # allow `python src/youtube_ingest.py`
 from src.config import settings  # noqa: E402
 from src.ingestion.live_chat_poller import poll_live_chat  # noqa: E402
 from src.ingestion.youtube import (  # noqa: E402
+    MAX_CHAT_RESULTS,
+    MIN_CHAT_RESULTS,
     LiveChatUnavailableError,
     YouTubeAPIError,
     YouTubeClient,
@@ -26,6 +28,20 @@ from src.ingestion.youtube import (  # noqa: E402
 from src.storage.raw_writer import save_raw_json  # noqa: E402
 
 logger = logging.getLogger("youtube_ingest")
+
+
+def max_results_type(value: str) -> int:
+    try:
+        number = int(value)
+    except ValueError:
+        raise argparse.ArgumentTypeError(f"invalid integer: {value!r}") from None
+
+    if not MIN_CHAT_RESULTS <= number <= MAX_CHAT_RESULTS:
+        raise argparse.ArgumentTypeError(
+            f"must be between {MIN_CHAT_RESULTS} and {MAX_CHAT_RESULTS}, got {number}"
+        )
+
+    return number
 
 
 def parse_args(argv=None) -> argparse.Namespace:
@@ -38,7 +54,12 @@ def parse_args(argv=None) -> argparse.Namespace:
     parser.add_argument("--raw-dir", type=Path, default=settings.RAW_DIR)
     parser.add_argument("--max-polls", type=int, default=None, help="Stop after N polls.")
     parser.add_argument("--duration", type=float, default=None, help="Stop after N seconds.")
-    parser.add_argument("--max-results", type=int, default=2000, help="Messages per page (200-2000).")
+    parser.add_argument(
+        "--max-results",
+        type=max_results_type,
+        default=MAX_CHAT_RESULTS,
+        help=f"Messages per page ({MIN_CHAT_RESULTS}-{MAX_CHAT_RESULTS}).",
+    )
     parser.add_argument("--no-resume", action="store_true", help="Ignore the saved page-token checkpoint.")
     parser.add_argument("-v", "--verbose", action="store_true")
     return parser.parse_args(argv)

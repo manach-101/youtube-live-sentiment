@@ -11,6 +11,7 @@ def normalize_message(item: dict) -> dict:
         "is_moderator": author_details.get("isChatModerator", False),
         "is_owner": author_details.get("isChatOwner", False),
         "is_verified": author_details.get("isVerified", False),
+        "live_chat_id": snippet.get("liveChatId"),
     }
 
 def normalize_messages(data: dict) -> list[dict]:

@@ -7,6 +7,7 @@ idempotent: running it twice on the same raw files yields the same output.
 import argparse
 import json
 import logging
+from collections import Counter
 from pathlib import Path
 
 import pyarrow as pa
@@ -18,7 +19,7 @@ from src.features.spam_features import (
     add_repeated_character_ratio,
     add_seconds_since_previous_message,
 )
-from src.processing.normalize_messages import normalize_messages
+from src.processing.normalize_messages import normalize_message
 from src.storage.parquet_writer import write_parquet
 
 logger = logging.getLogger(__name__)
@@ -26,6 +27,12 @@ logger = logging.getLogger(__name__)
 RAW_DIR = settings.RAW_DIR
 OUTPUT_PATH = str(settings.SILVER_PATH)
 RAW_GLOB = "youtube_comments_*.json"
+
+# Chat items that carry a viewer-authored message. Everything else
+# (messageDeletedEvent, userBannedEvent, memberMilestoneChatEvent, ...) is a
+# moderation or system event: it stays in Bronze but is excluded from Silver.
+# Items without ``snippet.type`` (not produced by the API) are kept.
+TEXT_EVENT_TYPES = {"textMessageEvent", "superChatEvent"}
 
 SILVER_SCHEMA = pa.schema(
     [
@@ -42,18 +49,31 @@ SILVER_SCHEMA = pa.schema(
         ("seconds_since_previous_message", pa.float64()),
         ("spam_score", pa.float64()),
         ("is_spam", pa.bool_()),
+        ("live_chat_id", pa.string()),
     ]
 )
 
 
 def load_raw_messages(raw_dir: Path) -> tuple[list[dict], dict]:
-    """Normalizes all raw pages, dropping messages already seen (same message_id).
+    """Normalizes all raw pages into Silver candidate messages.
 
-    Consecutive polls can return overlapping messages; counting them twice
-    would inflate ``duplicate_text_count`` and create fake 0-second cadence.
-    Files are read in name (= capture time) order, so the first capture wins.
+    - Items already seen (same ``id``) are dropped. Consecutive polls can return
+      overlapping messages; counting them twice would inflate
+      ``duplicate_text_count`` and create fake 0-second cadence. Files are read
+      in name (= capture time) order, so the first capture wins.
+    - Non-text events are excluded (see ``TEXT_EVENT_TYPES``) and counted by
+      type. De-duplication happens first, so overlapping polls do not inflate
+      the excluded counts.
     """
-    stats = {"files_processed": 0, "files_skipped": 0, "raw_messages": 0, "duplicates_dropped": 0}
+    stats = {
+        "files_processed": 0,
+        "files_skipped": 0,
+        "raw_messages": 0,
+        "duplicates_dropped": 0,
+        "events_excluded": 0,
+        "events_excluded_by_type": {},
+    }
+    excluded_by_type: Counter[str] = Counter()
     seen_ids: set[str] = set()
     messages: list[dict] = []
 
@@ -70,9 +90,9 @@ def load_raw_messages(raw_dir: Path) -> tuple[list[dict], dict]:
 
         stats["files_processed"] += 1
 
-        for message in normalize_messages(data):
+        for item in data.get("items", []):
             stats["raw_messages"] += 1
-            message_id = message.get("message_id")
+            message_id = item.get("id")
 
             if message_id is not None:
                 if message_id in seen_ids:
@@ -80,7 +100,15 @@ def load_raw_messages(raw_dir: Path) -> tuple[list[dict], dict]:
                     continue
                 seen_ids.add(message_id)
 
-            messages.append(message)
+            event_type = (item.get("snippet") or {}).get("type")
+            if event_type is not None and event_type not in TEXT_EVENT_TYPES:
+                excluded_by_type[event_type] += 1
+                continue
+
+            messages.append(normalize_message(item))
+
+    stats["events_excluded"] = sum(excluded_by_type.values())
+    stats["events_excluded_by_type"] = dict(sorted(excluded_by_type.items()))
 
     return messages, stats
 
@@ -110,6 +138,11 @@ def process_raw_files(raw_dir: Path = None, output_path: str | Path = None) -> d
     if stats["files_skipped"]:
         print(f"Files skipped (unreadable): {stats['files_skipped']}")
     print(f"Duplicate messages dropped: {stats['duplicates_dropped']}")
+    excluded_detail = ", ".join(f"{k}={v}" for k, v in stats["events_excluded_by_type"].items())
+    print(
+        f"Non-text events excluded: {stats['events_excluded']}"
+        + (f" ({excluded_detail})" if excluded_detail else "")
+    )
     print(f"Messages processed: {stats['messages_processed']}")
     print(f"Spam messages: {stats['spam_messages']}")
     print(f"Output: {output_path}")

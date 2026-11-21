@@ -1,0 +1,66 @@
+{
+  "kind": "youtube#liveChatMessageListResponse",
+  "etag": "etag-20260901_120200_000000",
+  "pollingIntervalMillis": 5000,
+  "pageInfo": {
+    "totalResults": 2,
+    "resultsPerPage": 2
+  },
+  "nextPageToken": "TOKEN_PAGE_5",
+  "items": [
+    {
+      "kind": "youtube#liveChatMessage",
+      "etag": "etag-mod-del-001",
+      "id": "mod-del-001",
+      "snippet": {
+        "type": "messageDeletedEvent",
+        "liveChatId": "SYNTHETIC_LIVE_CHAT_ID",
+        "authorChannelId": "UC_synthetic_carol",
+        "publishedAt": "2026-09-01T12:01:40.000000+00:00",
+        "hasDisplayContent": false,
+        "messageDeletedDetails": {
+          "deletedMessageId": "msg-009"
+        }
+      },
+      "authorDetails": {
+        "channelId": "UC_synthetic_carol",
+        "channelUrl": "http://www.youtube.com/channel/UC_synthetic_carol",
+        "displayName": "Carol",
+        "profileImageUrl": "https://example.invalid/avatar.png",
+        "isVerified": false,
+        "isChatOwner": false,
+        "isChatSponsor": false,
+        "isChatModerator": true
+      }
+    },
+    {
+      "kind": "youtube#liveChatMessage",
+      "etag": "etag-mod-ban-001",
+      "id": "mod-ban-001",
+      "snippet": {
+        "type": "userBannedEvent",
+        "liveChatId": "SYNTHETIC_LIVE_CHAT_ID",
+        "authorChannelId": "UC_synthetic_carol",
+        "publishedAt": "2026-09-01T12:01:41.000000+00:00",
+        "hasDisplayContent": false,
+        "userBannedDetails": {
+          "bannedUserDetails": {
+            "channelId": "UC_synthetic_promobot",
+            "displayName": "PromoBot"
+          },
+          "banType": "permanent"
+        }
+      },
+      "authorDetails": {
+        "channelId": "UC_synthetic_carol",
+        "channelUrl": "http://www.youtube.com/channel/UC_synthetic_carol",
+        "displayName": "Carol",
+        "profileImageUrl": "https://example.invalid/avatar.png",
+        "isVerified": false,
+        "isChatOwner": false,
+        "isChatSponsor": false,
+        "isChatModerator": true
+      }
+    }
+  ]
+}

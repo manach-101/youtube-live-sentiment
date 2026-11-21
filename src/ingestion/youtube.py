@@ -27,6 +27,15 @@ RETRYABLE_STATUS_CODES = {429, 500, 502, 503, 504}
 RETRYABLE_REASONS = {"rateLimitExceeded", "userRateLimitExceeded", "backendError"}
 # Reasons meaning the live chat can no longer be read.
 CHAT_ENDED_REASONS = {"liveChatEnded", "liveChatNotFound", "liveChatDisabled"}
+# Reasons meaning the pageToken we sent is invalid or expired. Taken from the
+# YouTube Data API error documentation; not yet observed against the live API.
+INVALID_PAGE_TOKEN_REASONS = {"invalidPageToken", "pageTokenInvalid"}
+# Set by this client (not by YouTube) when an HTTP 200 body is not a JSON object.
+INVALID_JSON_REASON = "invalidJson"
+
+# liveChatMessages.list accepts maxResults between 200 and 2000 (inclusive).
+MIN_CHAT_RESULTS = 200
+MAX_CHAT_RESULTS = 2000
 
 
 class YouTubeAPIError(Exception):
@@ -38,6 +47,10 @@ class YouTubeAPIError(Exception):
     @property
     def chat_ended(self) -> bool:
         return self.reason in CHAT_ENDED_REASONS
+
+    @property
+    def invalid_page_token(self) -> bool:
+        return self.status_code == 400 and self.reason in INVALID_PAGE_TOKEN_REASONS
 
 
 class LiveChatUnavailableError(Exception):
@@ -109,13 +122,25 @@ class YouTubeClient:
                 continue
 
             if response.status_code == 200:
-                return response.json()
+                try:
+                    body = response.json()
+                except ValueError:
+                    body = None
 
-            reason, message = _parse_error(response)
-            retryable = (
-                response.status_code in RETRYABLE_STATUS_CODES
-                or reason in RETRYABLE_REASONS
-            )
+                if isinstance(body, dict):
+                    return body
+
+                # A 200 with a non-JSON or non-object body (truncated transfer,
+                # proxy or captive-portal page) is treated as transient.
+                reason = INVALID_JSON_REASON
+                message = "HTTP 200 response body is not a JSON object"
+                retryable = True
+            else:
+                reason, message = _parse_error(response)
+                retryable = (
+                    response.status_code in RETRYABLE_STATUS_CODES
+                    or reason in RETRYABLE_REASONS
+                )
 
             if not retryable or is_last_attempt:
                 raise YouTubeAPIError(
@@ -141,8 +166,13 @@ class YouTubeClient:
         self,
         live_chat_id: str,
         page_token: Optional[str] = None,
-        max_results: int = 2000,
+        max_results: int = MAX_CHAT_RESULTS,
     ) -> dict:
+        if not MIN_CHAT_RESULTS <= max_results <= MAX_CHAT_RESULTS:
+            raise ValueError(
+                f"max_results must be between {MIN_CHAT_RESULTS} and {MAX_CHAT_RESULTS}, got {max_results}"
+            )
+
         params = {
             "liveChatId": live_chat_id,
             "part": "snippet,authorDetails",

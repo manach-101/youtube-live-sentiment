@@ -14,6 +14,9 @@ They are designed to exercise edge cases in the pipeline:
 | Mixed timestamp formats (`Z`, 1/6 fractional digits) | `msg-002`, `msg-003` |
 | Repetitive, fast-posting author | `PromoBot` |
 | Emoji graphemes | `msg-007` |
+| Moderation events that must not reach Silver | `mod-del-001` (`messageDeletedEvent`), `mod-ban-001` (`userBannedEvent`) |
+| A second, concurrent stream with the same spammer and the same viewer text | `SYNTHETIC_LIVE_CHAT_ID_2` (`s2-msg-001`, `s2-msg-002`) |
 
-Expected results (asserted in `tests/test_pipeline_end_to_end.py`): 12 raw items,
-1 duplicate dropped, 11 Silver rows, 2 spam messages, 6 Gold authors.
+Expected results (asserted in `tests/test_pipeline_end_to_end.py`): 5 files, 16 raw items,
+1 duplicate dropped, 2 moderation events excluded, 13 Silver rows across 2 streams,
+2 spam messages (`msg-004`, `msg-005`), 6 Gold authors.

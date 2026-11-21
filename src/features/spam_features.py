@@ -6,8 +6,13 @@ import regex
 
 
 def add_duplicate_text_count(messages: list[dict]) -> list[dict]:
+    """Occurrences of the identical text within the same live chat.
+
+    Counting per ``live_chat_id`` keeps one stream's chat from inflating the
+    duplicate count (and spam score) of messages in another stream.
+    """
     text_counts = Counter(
-        message.get("message")
+        (message.get("live_chat_id"), message.get("message"))
         for message in messages
         if message.get("message")
     )
@@ -18,7 +23,9 @@ def add_duplicate_text_count(messages: list[dict]) -> list[dict]:
         enriched_message = message.copy()
 
         text = message.get("message")
-        enriched_message["duplicate_text_count"] = text_counts.get(text, 0)
+        enriched_message["duplicate_text_count"] = (
+            text_counts.get((message.get("live_chat_id"), text), 0) if text else 0
+        )
 
         enriched_messages.append(enriched_message)
 
@@ -73,7 +80,7 @@ def parse_timestamp(value: Optional[str]) -> Optional[datetime]:
 
 
 def add_seconds_since_previous_message(messages: list[dict]) -> list[dict]:
-    """Seconds since the same author's previous message.
+    """Seconds since the same author's previous message in the same live chat.
 
     Messages are ordered by their parsed timestamp (not the raw string, whose
     lexical order breaks with mixed formats such as ``...18Z`` vs
@@ -95,18 +102,21 @@ def add_seconds_since_previous_message(messages: list[dict]) -> list[dict]:
         enriched_message = message.copy()
 
         author_id = message.get("author_channel_id")
+        # Gaps are tracked per (stream, author) so posting in one stream does
+        # not shorten the gap measured in another.
+        author_key = (message.get("live_chat_id"), author_id)
 
         seconds_since_previous_message = None
 
         if author_id and current_time is not None:
-            previous_time = last_message_time_by_author.get(author_id)
+            previous_time = last_message_time_by_author.get(author_key)
 
             if previous_time is not None:
                 seconds_since_previous_message = (
                     current_time - previous_time
                 ).total_seconds()
 
-            last_message_time_by_author[author_id] = current_time
+            last_message_time_by_author[author_key] = current_time
 
         enriched_message["seconds_since_previous_message"] = (
             seconds_since_previous_message

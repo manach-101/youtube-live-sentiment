@@ -107,8 +107,9 @@ def poll_live_chat(
                 if exc.chat_ended:
                     stats.stop_reason = f"chat ended ({exc.reason})"
                     break
-                if page_token and exc.status_code == 400:
-                    # A stale checkpoint token: restart from the current chat head.
+                if page_token and exc.invalid_page_token:
+                    # Only a confirmed invalid/expired token resets the checkpoint;
+                    # any other error keeps it so a later run can still resume.
                     logger.warning("Page token rejected (%s); restarting without it", exc.reason)
                     page_token = None
                     checkpoint.save(None)
