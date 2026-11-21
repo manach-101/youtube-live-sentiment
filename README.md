@@ -50,6 +50,26 @@ python -m src.pipeline --raw-dir tests/fixtures/raw --data-dir data/demo
 
 If you have `make`: `make setup`, `make test` and `make demo` do the same things.
 
+### Freshly formatted Mac
+
+macOS ships without a suitable Python. Install the Xcode Command Line Tools (which provide `git` and `make`) and Homebrew, then Python 3.12:
+
+```bash
+xcode-select --install
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew install python@3.12
+```
+
+Then clone the repo and run the setup, tests and demo, using Homebrew's Python explicitly:
+
+```bash
+git clone https://github.com/manach-101/youtube-live-sentiment.git && cd youtube-live-sentiment
+make setup PYTHON=python3.12
+make test
+make demo
+cp .env.example .env    # then edit .env and set YOUTUBE_API_KEY
+```
+
 ## Configuration
 
 ```bash
