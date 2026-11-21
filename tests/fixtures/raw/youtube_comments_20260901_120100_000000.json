@@ -1,0 +1,142 @@
+{
+  "kind": "youtube#liveChatMessageListResponse",
+  "etag": "etag-20260901_120100_000000",
+  "pollingIntervalMillis": 5000,
+  "pageInfo": {
+    "totalResults": 5,
+    "resultsPerPage": 5
+  },
+  "nextPageToken": "TOKEN_PAGE_3",
+  "items": [
+    {
+      "kind": "youtube#liveChatMessage",
+      "etag": "etag-msg-004",
+      "id": "msg-004",
+      "snippet": {
+        "type": "textMessageEvent",
+        "liveChatId": "SYNTHETIC_LIVE_CHAT_ID",
+        "authorChannelId": "UC_synthetic_promobot",
+        "publishedAt": "2026-09-01T12:00:18.000000+00:00",
+        "hasDisplayContent": true,
+        "displayMessage": "FREE GIFT CARDS!!!!!!",
+        "textMessageDetails": {
+          "messageText": "FREE GIFT CARDS!!!!!!"
+        }
+      },
+      "authorDetails": {
+        "channelId": "UC_synthetic_promobot",
+        "channelUrl": "http://www.youtube.com/channel/UC_synthetic_promobot",
+        "displayName": "PromoBot",
+        "profileImageUrl": "https://example.invalid/avatar.png",
+        "isVerified": false,
+        "isChatOwner": false,
+        "isChatSponsor": false,
+        "isChatModerator": false
+      }
+    },
+    {
+      "kind": "youtube#liveChatMessage",
+      "etag": "etag-msg-005",
+      "id": "msg-005",
+      "snippet": {
+        "type": "textMessageEvent",
+        "liveChatId": "SYNTHETIC_LIVE_CHAT_ID",
+        "authorChannelId": "UC_synthetic_promobot",
+        "publishedAt": "2026-09-01T12:00:25.300000+00:00",
+        "hasDisplayContent": true,
+        "displayMessage": "FREE GIFT CARDS!!!!!!",
+        "textMessageDetails": {
+          "messageText": "FREE GIFT CARDS!!!!!!"
+        }
+      },
+      "authorDetails": {
+        "channelId": "UC_synthetic_promobot",
+        "channelUrl": "http://www.youtube.com/channel/UC_synthetic_promobot",
+        "displayName": "PromoBot",
+        "profileImageUrl": "https://example.invalid/avatar.png",
+        "isVerified": false,
+        "isChatOwner": false,
+        "isChatSponsor": false,
+        "isChatModerator": false
+      }
+    },
+    {
+      "kind": "youtube#liveChatMessage",
+      "etag": "etag-msg-006",
+      "id": "msg-006",
+      "snippet": {
+        "type": "textMessageEvent",
+        "liveChatId": "SYNTHETIC_LIVE_CHAT_ID",
+        "authorChannelId": "UC_synthetic_bob_2",
+        "publishedAt": "2026-09-01T12:00:40.000000+00:00",
+        "hasDisplayContent": true,
+        "displayMessage": "hello from another Bob",
+        "textMessageDetails": {
+          "messageText": "hello from another Bob"
+        }
+      },
+      "authorDetails": {
+        "channelId": "UC_synthetic_bob_2",
+        "channelUrl": "http://www.youtube.com/channel/UC_synthetic_bob_2",
+        "displayName": "Bob",
+        "profileImageUrl": "https://example.invalid/avatar.png",
+        "isVerified": false,
+        "isChatOwner": false,
+        "isChatSponsor": false,
+        "isChatModerator": false
+      }
+    },
+    {
+      "kind": "youtube#liveChatMessage",
+      "etag": "etag-msg-007",
+      "id": "msg-007",
+      "snippet": {
+        "type": "textMessageEvent",
+        "liveChatId": "SYNTHETIC_LIVE_CHAT_ID",
+        "authorChannelId": "UC_synthetic_owner",
+        "publishedAt": "2026-09-01T12:00:55.000000+00:00",
+        "hasDisplayContent": true,
+        "displayMessage": "Welcome everyone 👋👋",
+        "textMessageDetails": {
+          "messageText": "Welcome everyone 👋👋"
+        }
+      },
+      "authorDetails": {
+        "channelId": "UC_synthetic_owner",
+        "channelUrl": "http://www.youtube.com/channel/UC_synthetic_owner",
+        "displayName": "News Channel",
+        "profileImageUrl": "https://example.invalid/avatar.png",
+        "isVerified": true,
+        "isChatOwner": true,
+        "isChatSponsor": false,
+        "isChatModerator": false
+      }
+    },
+    {
+      "kind": "youtube#liveChatMessage",
+      "etag": "etag-msg-008",
+      "id": "msg-008",
+      "snippet": {
+        "type": "textMessageEvent",
+        "liveChatId": "SYNTHETIC_LIVE_CHAT_ID",
+        "authorChannelId": "UC_synthetic_alice",
+        "publishedAt": "2026-09-01T12:01:10.000000+00:00",
+        "hasDisplayContent": true,
+        "displayMessage": "Thanks!",
+        "textMessageDetails": {
+          "messageText": "Thanks!"
+        }
+      },
+      "authorDetails": {
+        "channelId": "UC_synthetic_alice",
+        "channelUrl": "http://www.youtube.com/channel/UC_synthetic_alice",
+        "displayName": "Alice",
+        "profileImageUrl": "https://example.invalid/avatar.png",
+        "isVerified": true,
+        "isChatOwner": false,
+        "isChatSponsor": false,
+        "isChatModerator": false
+      }
+    }
+  ]
+}
