@@ -1,349 +1,241 @@
 # YouTube Live Sentiment Pipeline
 
-A data engineering project that ingests live YouTube chat data, preserves raw API responses, transforms events into analytics-ready datasets, and enriches messages with spam-related behavioral features.
+A batch data-engineering pipeline that ingests YouTube live chat through the YouTube Data API v3, keeps the raw API responses as a Bronze layer, builds a deduplicated Silver dataset with spam features, and produces Gold author-level analytics. Everything is stored as local JSON and Parquet files and queried with DuckDB.
 
-The project is designed incrementally toward an end-to-end streaming analytics architecture for studying public reactions and narrative shifts during live news broadcasts.
+The long-term goal is to study public reactions during live news broadcasts. Sentiment analysis is **not implemented yet**; see [Roadmap](#roadmap).
 
-## Current Architecture
+## Architecture
 
 ```text
-YouTube Live Stream
-        │
-        ▼
 YouTube Data API v3
+  videos.list ──────────────► activeLiveChatId
+  liveChatMessages.list ─────► paginated polling (nextPageToken, pollingIntervalMillis,
+        │                       retry/backoff, checkpoint/resume)
+        ▼
+Bronze  raw/youtube_comments_<UTC timestamp>.json      unmodified API pages
+        raw/youtube_video_<UTC timestamp>.json          video metadata
+        raw/_state/<liveChatId>.json                    page-token checkpoint
+        │   python -m src.processing.process_raw_files
+        ▼
+Silver  data/processed/youtube_messages.parquet         1 row per unique message_id
+        normalize → dedupe → features → heuristic spam score
+        │   python -m src.processing.build_gold
+        ▼
+Gold    data/analytics/author_summary.parquet           1 row per author_channel_id
         │
         ▼
-Python Ingestion Layer
-        │
-        ├── Video Metadata
-        └── Live Chat Messages
-        │
-        ▼
-Raw JSON Storage
-        │
-        ▼
-Normalization
-        │
-        ▼
-Feature Engineering
-        │
-        ├── Duplicate text count
-        ├── Repeated character ratio
-        └── Message cadence
-        │
-        ▼
-Spam Classification
-        │
-        ▼
-Silver Parquet Dataset
-        │
-        ▼
-Author-Level Aggregations
-        │
-        ▼
-Gold Analytics Dataset
+DuckDB  src/analytics/queries.py                        ad-hoc SQL over Silver
 ```
 
-## Data Layers
+`python -m src.pipeline` runs Silver and Gold in one step. Every layer after Bronze is derived state, so it can be deleted and rebuilt at any time without calling the API again.
 
-The pipeline follows a layered data model.
+## Quick start (fresh machine)
 
-### Raw / Bronze
-
-Original YouTube API responses are preserved as timestamped JSON files.
-
-This layer acts as the source of truth and allows downstream datasets to be rebuilt without requesting the original events again.
-
-### Silver
-
-Raw chat events are normalized into a flat analytical schema and enriched with behavioral features.
-
-Current fields include:
-
-- `message_id`
-- `author_channel_id`
-- `author_name`
-- `message`
-- `published_at`
-- `is_moderator`
-- `is_owner`
-- `is_verified`
-- `duplicate_text_count`
-- `repeated_character_ratio`
-- `seconds_since_previous_message`
-- `spam_score`
-- `is_spam`
-
-Silver data is stored in Apache Parquet.
-
-### Gold
-
-The Gold layer currently produces author-level analytics including:
-
-- Total messages
-- Spam messages
-- Average spam score
-- Spam rate
-
-This layer is intended to serve downstream BI, dashboards, and analytical workloads.
-
-## Spam Detection
-
-The current spam classifier is heuristic and intentionally interpretable.
-
-It combines multiple behavioral signals rather than relying on a single rule:
-
-- Exact message repetition
-- Short intervals between messages from the same author
-- Repeated visual characters or symbols
-
-These signals are converted into a `spam_score` between `0.0` and `1.0`.
-
-Messages above the current threshold are marked with:
-
-```text
-is_spam = True
-```
-
-The classifier is an early-stage analytical component and will evolve as more real-world chat data is collected.
-
-## Current Features
-
-- YouTube Data API v3 integration
-- Dynamic `liveChatId` discovery
-- Live chat message ingestion
-- Video and channel metadata extraction
-- Timestamped raw API response preservation
-- Raw-to-Silver normalization pipeline
-- Apache Parquet output
-- Unicode-aware repeated-character detection
-- Message cadence analysis by author
-- Duplicate-message feature engineering
-- Rule-based spam scoring
-- Author-level Gold aggregations
-- Environment-based API key configuration
-- Modular ingestion, storage, processing, feature, and classification layers
-- Generated datasets excluded from version control
-- DuckDB-based analytical querying over Parquet datasets
-- Reusable SQL analytics for top authors, spam rate, and messages per minute
-- Automated unit tests for normalization and spam classification
-
-## Project Structure
-
-```text
-youtube-live-sentiment/
-│
-├── src/
-│   ├── analytics/
-│   │   ├── __init__.py
-│   │   └── queries.py
-│   │
-│   ├── classification/
-│   │   ├── __init__.py
-│   │   └── spam_classifier.py
-│   │
-│   ├── config/
-│   │   └── settings.py
-│   │
-│   ├── features/
-│   │   └── spam_features.py
-│   │
-│   ├── ingestion/
-│   │   └── youtube.py
-│   │
-│   ├── processing/
-│   │   ├── __init__.py
-│   │   ├── build_gold.py
-│   │   ├── normalize_messages.py
-│   │   └── process_raw_files.py
-│   │
-│   ├── storage/
-│   │   ├── parquet_writer.py
-│   │   └── raw_writer.py
-│   │
-│   ├── main.py
-│   └── youtube_ingest.py
-│
-├── tests/
-│   ├── test_normalize_messages.py
-│   └── test_spam_classifier.py
-│
-├── raw/
-│
-├── data/
-│   ├── processed/
-│   └── analytics/
-│
-├── .env.example
-├── .gitignore
-├── pytest.ini
-├── requirements.txt
-└── README.md
-```
-
-Generated files under `raw/` and `data/` are excluded from version control.
-
-## Tech Stack
-
-### Currently Implemented
-
-- Python
-- YouTube Data API v3
-- Requests
-- Pandas
-- Apache Arrow / PyArrow
-- Apache Parquet
-- DuckDB
-- Pytest
-- Regex / Unicode grapheme processing
-- Git / GitHub
-
-## Running the Pipeline
-
-### 1. Ingest Live YouTube Data
+Requirements: **Python 3.12 or newer** (the pinned numpy 2.5 needs it) and `git`. `make` is optional.
 
 ```bash
-python3 src/youtube_ingest.py
+git clone https://github.com/manach-101/youtube-live-sentiment.git
+cd youtube-live-sentiment
+python3 -m venv .venv
+source .venv/bin/activate          # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
 ```
 
-### 2. Build the Silver Dataset
+Check the install offline (no API key needed):
 
 ```bash
-python3 -m src.processing.process_raw_files
+python -m pytest -q
+python -m src.pipeline --raw-dir tests/fixtures/raw --data-dir data/demo
 ```
 
-Example output:
+If you have `make`: `make setup`, `make test` and `make demo` do the same things.
 
-```text
-Files processed: 4
-Messages processed: 20
-Spam messages: 3
-Output: data/processed/youtube_messages.parquet
-```
-
-### 3. Build the Gold Analytics Dataset
+## Configuration
 
 ```bash
-python3 -m src.processing.build_gold
+cp .env.example .env
 ```
 
-Example output:
+| Variable | Required | Default | Purpose |
+|---|---|---|---|
+| `YOUTUBE_API_KEY` | ingestion only | none | API key with YouTube Data API v3 enabled |
+| `YOUTUBE_VIDEO_ID` | no | none | Default for `--video-id` |
+| `RAW_DIR` | no | `raw` | Bronze directory |
+| `SILVER_PATH` | no | `data/processed/youtube_messages.parquet` | Silver output |
+| `GOLD_PATH` | no | `data/analytics/author_summary.parquet` | Gold output |
 
-```text
-Authors summarized: 9
-Output: data/analytics/author_summary.parquet
-```
-## Running Analytics Queries
+`.env`, `raw/` and `data/` are git-ignored. Only ingestion needs the API key; processing, analytics and tests run without it.
 
-The project includes reusable DuckDB queries that operate directly on the Silver Parquet dataset.
+## Running
 
-Current analytical queries include:
+### 1. Ingest a live chat (needs API key and a currently live stream)
 
-- Top authors by message count
-- Global spam summary
-- Messages per minute
-- Spam messages per minute
-
-DuckDB queries are implemented in:
-
-```text
-src/analytics/queries.py
+```bash
+python -m src.youtube_ingest --video-id <VIDEO_ID> --duration 600
 ```
 
-Example:
+| Option | Meaning |
+|---|---|
+| `--duration SECONDS` / `--max-polls N` | Stop after a time limit or number of polls. Without either, it runs until the chat ends or you press Ctrl+C. |
+| `--max-results N` | Messages per page (API allows 200–2000; default 2000). |
+| `--no-resume` | Ignore the saved page-token checkpoint. |
+| `--raw-dir DIR` | Where to write Bronze files. |
+| `-v` | Debug logging. |
+
+Exit codes: `0` success, `1` API or video error (for example no active chat or quota exhausted), `2` configuration error (missing key or video ID).
+
+How ingestion behaves:
+
+- **Pagination**: follows `nextPageToken` and waits the API's `pollingIntervalMillis` (at least 1 s) between polls.
+- **Retries**: network errors, HTTP 429/5xx and `rateLimitExceeded` are retried with exponential backoff plus jitter, and `Retry-After` is honored. Permanent errors such as `quotaExceeded`, an invalid key, or a chat that has ended are not retried.
+- **Stops cleanly** on `offlineAt`, `liveChatEnded`/`liveChatNotFound`/`liveChatDisabled`, the duration or poll limit, or Ctrl+C.
+- **Safe persistence**: each non-empty page is written atomically (temp file then rename) with a microsecond timestamp and never overwrites an existing file. The page token is checkpointed after every page, so a restart resumes where it stopped. If the API rejects a stale token, ingestion restarts from the current head of the chat.
+- **Duplicates**: Bronze keeps API pages unchanged. Overlapping messages are counted in the logs and removed in Silver by `message_id`.
+- **Secrets**: the API key is redacted from error messages, and `urllib3` request-URL logging is silenced.
+
+### 2. Build Silver and Gold
+
+```bash
+python -m src.pipeline                      # raw/ -> data/
+# or step by step:
+python -m src.processing.process_raw_files  # --raw-dir, --output
+python -m src.processing.build_gold         # --silver-path, --output
+```
+
+### 3. Query with DuckDB
 
 ```python
-from src.analytics.queries import get_spam_summary
+from src.analytics.queries import get_spam_summary, get_top_authors, get_messages_per_minute
 
 print(get_spam_summary())
+print(get_top_authors(limit=5))
+print(get_messages_per_minute())     # each function takes an optional silver_path=
 ```
 
-DuckDB reads the Parquet dataset directly without requiring a separate database server.
+## Data contracts
 
-## Testing
+**Bronze**: `raw/youtube_comments_*.json` files hold the `liveChatMessages.list` response unchanged (`items[].id`, `items[].snippet`, `items[].authorDetails`).
 
-The project includes automated tests using Pytest.
+**Silver**: `youtube_messages.parquet` has one row per unique `message_id`, with a fixed schema:
 
-Current test coverage includes:
+| Column | Type | Notes |
+|---|---|---|
+| `message_id` | string | unique |
+| `author_channel_id` | string | |
+| `author_name` | string | display name (not unique) |
+| `message` | string | `displayMessage`; null for events without text |
+| `published_at` | string | ISO-8601 exactly as returned by the API |
+| `is_moderator`, `is_owner`, `is_verified` | bool | |
+| `duplicate_text_count` | int64 | occurrences of the identical text across the whole dataset |
+| `repeated_character_ratio` | float64 | share of adjacent identical graphemes (Unicode-aware) |
+| `seconds_since_previous_message` | float64 | gap from the same author's previous message; null for their first |
+| `spam_score` | float64 | 0.0–1.0 |
+| `is_spam` | bool | `spam_score >= 0.7` |
 
-- Raw message normalization
-- Spam classification for suspicious behavior
-- Spam classification for normal messages
+**Gold**: `author_summary.parquet` has one row per `author_channel_id`, with columns `author_channel_id`, `author_name` (latest display name), `total_messages`, `spam_messages`, `average_spam_score` and `spam_rate`. Rows are sorted by `total_messages` descending.
 
-Run the test suite with:
+### Spam heuristic
+
+The score is a simple, interpretable rule-based heuristic, not a trained model. It adds up three signals:
+
+| Signal | Points |
+|---|---|
+| `duplicate_text_count >= 3` | +0.4 |
+| `seconds_since_previous_message < 15` | +0.4 |
+| `repeated_character_ratio > 0.10` | +0.2 |
+
+A message needs at least two signals, one of which must be duplicate text or fast posting, to reach the 0.7 spam threshold. The thresholds have not been calibrated against labelled data.
+
+## Tests
 
 ```bash
-pytest -q
+python -m pytest -q
 ```
 
-Current test result:
+There are 56 offline tests:
+
+| File | Covers |
+|---|---|
+| `test_pipeline_end_to_end.py` | Bronze → Silver → Gold on fixtures: expected counts, schemas, dedup, idempotency, corrupt or unrelated files, empty input, DuckDB queries |
+| `test_youtube_client.py` | Request parameters, retry/backoff, `Retry-After`, non-retryable errors, retry limit, key redaction, `liveChatId` extraction |
+| `test_live_chat_poller.py` | Page tokens, polling interval, checkpoint/resume, stale tokens, stop conditions, Ctrl+C, overlap counting |
+| `test_spam_features.py`, `test_spam_classifier.py`, `test_normalize_messages.py` | Feature and classifier logic, Unicode graphemes, mixed timestamp formats |
+| `test_storage_and_cli.py` | Atomic, non-overwriting raw writes; CLI exit codes; full CLI run against a fake HTTP session |
+
+The fixtures in `tests/fixtures/raw/` are **synthetic**. They follow the documented API response shape but no data in them was captured from YouTube. See `tests/fixtures/README.md` for the edge cases they contain.
+
+## Verified results
+
+These were checked on 2026-11-21 from a fresh clone of the branch, with `pip install -r requirements.txt` in a new virtualenv:
+
+- Python 3.12.3 and 3.13.18: install succeeds and **56 passed**.
+- Python 3.11: install **fails** because numpy 2.5.2 requires Python 3.12 or newer, hence the 3.12+ requirement.
+- Demo on the synthetic fixtures (`python -m src.pipeline --raw-dir tests/fixtures/raw --data-dir data/demo`):
 
 ```text
-3 passed
+Files processed: 3
+Duplicate messages dropped: 1
+Messages processed: 11
+Spam messages: 2
+Authors summarized: 6
 ```
 
-## Design Principles
+**Not verified:** ingestion against the real YouTube API. No API key or live stream was available while reviving the project. The HTTP client and polling loop are tested only against fakes that follow the documented API behaviour.
 
-The project currently follows several core data engineering principles:
+## Limitations
 
-- Preserve raw source data before transformation
-- Treat processed datasets as reproducible derived state
-- Keep ingestion, transformation, feature engineering, classification, and storage concerns separated
-- Avoid exposing credentials in source code
-- Keep generated datasets outside Git
-- Prefer deterministic and inspectable transformations
-- Preserve event-level data before performing analytical deduplication or aggregation
+- **Live API untested in this revision.** The first real run should be short, for example `--max-polls 3`, followed by a check of the raw files.
+- **Quota.** Every poll uses YouTube API quota. Long sessions can exhaust the daily quota, and ingestion then stops with `quotaExceeded`.
+- **Batch, not streaming.** Silver and Gold are full rebuilds from Bronze. That is simple and idempotent, but cost grows with the size of `raw/`.
+- **Duplicate detection is global.** `duplicate_text_count` counts identical text across all authors and the whole dataset, so common short messages ("hi", "🔥") from many people raise the count. Combined with the cadence signal this can flag enthusiastic but legitimate users.
+- **Polling resumes but may skip messages.** If a checkpoint token is rejected, ingestion restarts from the current head of the chat and messages posted in between are not fetched.
+- **Text only.** Super Chats, memberships and similar events are kept in Bronze but only `displayMessage` is used, and no event-type filtering is applied.
+- **No sentiment or NLP** yet, despite the project name.
+
+## Changes in this revision
+
+- Silver deduplicates by `message_id`. Overlapping polls previously created duplicate rows, a fake 0-second cadence and inflated duplicate counts, which made false spam positives likely.
+- Gold groups by `author_channel_id` instead of `author_name`. Different channels with the same display name were previously merged. **Contract change:** a new `author_channel_id` column was added, and the existing columns are unchanged.
+- Cadence is ordered by parsed timestamps. String ordering mis-sorted mixed formats (`…18Z` vs `…18.7+00:00`) and produced negative intervals.
+- An empty `raw/` previously crashed Gold. Silver and Gold now have explicit Parquet schemas and are written atomically.
+- `settings.py` no longer raises on import, so processing and tests run without a key.
+- Ingestion was rewritten from a one-shot script with a hardcoded video ID and `maxResults=5` into a CLI with polling, retries, a checkpoint and logging.
+- Raw files use microsecond timestamps and never overwrite each other. Before, two saves in the same second clobbered each other.
+- The `src/main.py` placeholder was removed.
+
+## Project structure
+
+```text
+src/
+  config/settings.py              env-based configuration
+  ingestion/youtube.py            API client (retry/backoff, errors)
+  ingestion/live_chat_poller.py   pagination, checkpoint, stop conditions
+  storage/raw_writer.py           atomic raw JSON writes
+  storage/parquet_writer.py       atomic Parquet writes with schema
+  processing/normalize_messages.py
+  processing/process_raw_files.py Bronze -> Silver
+  processing/build_gold.py        Silver -> Gold
+  features/spam_features.py
+  classification/spam_classifier.py
+  analytics/queries.py            DuckDB queries
+  pipeline.py                     Silver + Gold runner
+  youtube_ingest.py               ingestion CLI
+tests/
+  fixtures/raw/                   synthetic API pages
+Makefile  requirements.txt  .env.example  .python-version
+```
 
 ## Roadmap
 
-The project is being developed incrementally toward a streaming architecture.
+These are **not implemented**:
 
-```text
-YouTube Live
-      │
-      ▼
-Python Producer
-      │
-      ▼
-Apache Kafka
-      │
-      ▼
-Streaming Processing
-      │
-      ├── Data Quality
-      ├── Spam / Bot Detection
-      ├── NLP
-      ├── Entity Recognition
-      └── Sentiment Analysis
-      │
-      ▼
-Analytical Storage
-      │
-      ▼
-API Layer
-      │
-      ▼
-Real-Time Dashboard
-```
+- Sentiment analysis, entity and topic extraction
+- Calibrating the spam heuristic against labelled data; per-author duplicate features
+- Incremental Silver builds, partitioned by stream or date
+- Scheduling or orchestration (cron is likely enough) and Docker packaging
+- A dashboard or API over Gold
+- Streaming (for example Kafka), only if volume justifies it
 
-Planned next steps include:
+## Why this project?
 
-- DuckDB-based analytical querying
-- Dockerized execution
-- Automated pipeline orchestration
-- Message-per-minute aggregations
-- More robust bot and spam behavioral features
-- Sentiment analysis
-- Entity and topic extraction
-- PostgreSQL or analytical database integration
-- Backend API for serving analytics
-- Interactive dashboard
-- Apache Kafka for streaming ingestion
-
-## Why This Project?
-
-Most introductory data projects rely on static datasets.
-
-This project focuses instead on continuously generated real-world events and the engineering challenges that come with them: API ingestion, raw data preservation, reproducible transformations, behavioral feature engineering, data quality, analytical storage, and eventually streaming analytics.
-
-The long-term objective is to analyze how public sentiment, discussion topics, and coordinated behavior evolve during live news events while maintaining a reproducible and extensible data pipeline.
+Most introductory data projects use static datasets. This one works with continuously generated real-world events and the problems that come with them: API ingestion, raw data preservation, reproducible transformations, behavioral feature engineering and data quality.
