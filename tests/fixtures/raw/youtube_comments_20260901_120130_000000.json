@@ -1,0 +1,86 @@
+{
+  "kind": "youtube#liveChatMessageListResponse",
+  "etag": "etag-20260901_120130_000000",
+  "pollingIntervalMillis": 5000,
+  "pageInfo": {
+    "totalResults": 3,
+    "resultsPerPage": 3
+  },
+  "nextPageToken": "TOKEN_PAGE_4",
+  "items": [
+    {
+      "kind": "youtube#liveChatMessage",
+      "etag": "etag-msg-009",
+      "id": "msg-009",
+      "snippet": {
+        "type": "textMessageEvent",
+        "liveChatId": "SYNTHETIC_LIVE_CHAT_ID",
+        "authorChannelId": "UC_synthetic_promobot",
+        "publishedAt": "2026-09-01T12:01:15.000000+00:00",
+        "hasDisplayContent": true,
+        "displayMessage": "FREE GIFT CARDS!!!!!!",
+        "textMessageDetails": {
+          "messageText": "FREE GIFT CARDS!!!!!!"
+        }
+      },
+      "authorDetails": {
+        "channelId": "UC_synthetic_promobot",
+        "channelUrl": "http://www.youtube.com/channel/UC_synthetic_promobot",
+        "displayName": "PromoBot",
+        "profileImageUrl": "https://example.invalid/avatar.png",
+        "isVerified": false,
+        "isChatOwner": false,
+        "isChatSponsor": false,
+        "isChatModerator": false
+      }
+    },
+    {
+      "kind": "youtube#liveChatMessage",
+      "etag": "etag-msg-010",
+      "id": "msg-010",
+      "snippet": {
+        "type": "textMessageEvent",
+        "liveChatId": "SYNTHETIC_LIVE_CHAT_ID",
+        "authorChannelId": "UC_synthetic_carol",
+        "publishedAt": "2026-09-01T12:01:20.000000+00:00",
+        "hasDisplayContent": false
+      },
+      "authorDetails": {
+        "channelId": "UC_synthetic_carol",
+        "channelUrl": "http://www.youtube.com/channel/UC_synthetic_carol",
+        "displayName": "Carol",
+        "profileImageUrl": "https://example.invalid/avatar.png",
+        "isVerified": false,
+        "isChatOwner": false,
+        "isChatSponsor": false,
+        "isChatModerator": true
+      }
+    },
+    {
+      "kind": "youtube#liveChatMessage",
+      "etag": "etag-msg-011",
+      "id": "msg-011",
+      "snippet": {
+        "type": "textMessageEvent",
+        "liveChatId": "SYNTHETIC_LIVE_CHAT_ID",
+        "authorChannelId": "UC_synthetic_alice",
+        "publishedAt": "2026-09-01T12:01:30.000000+00:00",
+        "hasDisplayContent": true,
+        "displayMessage": "Great coverage tonight",
+        "textMessageDetails": {
+          "messageText": "Great coverage tonight"
+        }
+      },
+      "authorDetails": {
+        "channelId": "UC_synthetic_alice",
+        "channelUrl": "http://www.youtube.com/channel/UC_synthetic_alice",
+        "displayName": "Alice",
+        "profileImageUrl": "https://example.invalid/avatar.png",
+        "isVerified": true,
+        "isChatOwner": false,
+        "isChatSponsor": false,
+        "isChatModerator": false
+      }
+    }
+  ]
+}

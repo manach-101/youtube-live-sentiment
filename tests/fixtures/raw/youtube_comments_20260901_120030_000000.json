@@ -1,0 +1,116 @@
+{
+  "kind": "youtube#liveChatMessageListResponse",
+  "etag": "etag-20260901_120030_000000",
+  "pollingIntervalMillis": 5000,
+  "pageInfo": {
+    "totalResults": 4,
+    "resultsPerPage": 4
+  },
+  "nextPageToken": "TOKEN_PAGE_2",
+  "items": [
+    {
+      "kind": "youtube#liveChatMessage",
+      "etag": "etag-msg-001",
+      "id": "msg-001",
+      "snippet": {
+        "type": "textMessageEvent",
+        "liveChatId": "SYNTHETIC_LIVE_CHAT_ID",
+        "authorChannelId": "UC_synthetic_alice",
+        "publishedAt": "2026-09-01T12:00:05.120000+00:00",
+        "hasDisplayContent": true,
+        "displayMessage": "Great coverage tonight",
+        "textMessageDetails": {
+          "messageText": "Great coverage tonight"
+        }
+      },
+      "authorDetails": {
+        "channelId": "UC_synthetic_alice",
+        "channelUrl": "http://www.youtube.com/channel/UC_synthetic_alice",
+        "displayName": "Alice",
+        "profileImageUrl": "https://example.invalid/avatar.png",
+        "isVerified": true,
+        "isChatOwner": false,
+        "isChatSponsor": false,
+        "isChatModerator": false
+      }
+    },
+    {
+      "kind": "youtube#liveChatMessage",
+      "etag": "etag-msg-002",
+      "id": "msg-002",
+      "snippet": {
+        "type": "textMessageEvent",
+        "liveChatId": "SYNTHETIC_LIVE_CHAT_ID",
+        "authorChannelId": "UC_synthetic_promobot",
+        "publishedAt": "2026-09-01T12:00:10Z",
+        "hasDisplayContent": true,
+        "displayMessage": "FREE GIFT CARDS!!!!!!",
+        "textMessageDetails": {
+          "messageText": "FREE GIFT CARDS!!!!!!"
+        }
+      },
+      "authorDetails": {
+        "channelId": "UC_synthetic_promobot",
+        "channelUrl": "http://www.youtube.com/channel/UC_synthetic_promobot",
+        "displayName": "PromoBot",
+        "profileImageUrl": "https://example.invalid/avatar.png",
+        "isVerified": false,
+        "isChatOwner": false,
+        "isChatSponsor": false,
+        "isChatModerator": false
+      }
+    },
+    {
+      "kind": "youtube#liveChatMessage",
+      "etag": "etag-msg-003",
+      "id": "msg-003",
+      "snippet": {
+        "type": "textMessageEvent",
+        "liveChatId": "SYNTHETIC_LIVE_CHAT_ID",
+        "authorChannelId": "UC_synthetic_bob_1",
+        "publishedAt": "2026-09-01T12:00:12.5+00:00",
+        "hasDisplayContent": true,
+        "displayMessage": "Is the vote count final?",
+        "textMessageDetails": {
+          "messageText": "Is the vote count final?"
+        }
+      },
+      "authorDetails": {
+        "channelId": "UC_synthetic_bob_1",
+        "channelUrl": "http://www.youtube.com/channel/UC_synthetic_bob_1",
+        "displayName": "Bob",
+        "profileImageUrl": "https://example.invalid/avatar.png",
+        "isVerified": false,
+        "isChatOwner": false,
+        "isChatSponsor": false,
+        "isChatModerator": false
+      }
+    },
+    {
+      "kind": "youtube#liveChatMessage",
+      "etag": "etag-msg-004",
+      "id": "msg-004",
+      "snippet": {
+        "type": "textMessageEvent",
+        "liveChatId": "SYNTHETIC_LIVE_CHAT_ID",
+        "authorChannelId": "UC_synthetic_promobot",
+        "publishedAt": "2026-09-01T12:00:18.000000+00:00",
+        "hasDisplayContent": true,
+        "displayMessage": "FREE GIFT CARDS!!!!!!",
+        "textMessageDetails": {
+          "messageText": "FREE GIFT CARDS!!!!!!"
+        }
+      },
+      "authorDetails": {
+        "channelId": "UC_synthetic_promobot",
+        "channelUrl": "http://www.youtube.com/channel/UC_synthetic_promobot",
+        "displayName": "PromoBot",
+        "profileImageUrl": "https://example.invalid/avatar.png",
+        "isVerified": false,
+        "isChatOwner": false,
+        "isChatSponsor": false,
+        "isChatModerator": false
+      }
+    }
+  ]
+}

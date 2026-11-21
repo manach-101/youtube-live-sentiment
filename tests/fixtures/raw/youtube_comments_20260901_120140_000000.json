@@ -1,0 +1,64 @@
+{
+  "kind": "youtube#liveChatMessageListResponse",
+  "etag": "etag-20260901_120140_000000",
+  "pollingIntervalMillis": 5000,
+  "pageInfo": {
+    "totalResults": 2,
+    "resultsPerPage": 2
+  },
+  "nextPageToken": "TOKEN_S2_PAGE_2",
+  "items": [
+    {
+      "kind": "youtube#liveChatMessage",
+      "etag": "etag-s2-msg-001",
+      "id": "s2-msg-001",
+      "snippet": {
+        "type": "textMessageEvent",
+        "liveChatId": "SYNTHETIC_LIVE_CHAT_ID_2",
+        "authorChannelId": "UC_synthetic_promobot",
+        "publishedAt": "2026-09-01T12:01:20.000000+00:00",
+        "hasDisplayContent": true,
+        "displayMessage": "FREE GIFT CARDS!!!!!!",
+        "textMessageDetails": {
+          "messageText": "FREE GIFT CARDS!!!!!!"
+        }
+      },
+      "authorDetails": {
+        "channelId": "UC_synthetic_promobot",
+        "channelUrl": "http://www.youtube.com/channel/UC_synthetic_promobot",
+        "displayName": "PromoBot",
+        "profileImageUrl": "https://example.invalid/avatar.png",
+        "isVerified": false,
+        "isChatOwner": false,
+        "isChatSponsor": false,
+        "isChatModerator": false
+      }
+    },
+    {
+      "kind": "youtube#liveChatMessage",
+      "etag": "etag-s2-msg-002",
+      "id": "s2-msg-002",
+      "snippet": {
+        "type": "textMessageEvent",
+        "liveChatId": "SYNTHETIC_LIVE_CHAT_ID_2",
+        "authorChannelId": "UC_synthetic_alice",
+        "publishedAt": "2026-09-01T12:01:25.000000+00:00",
+        "hasDisplayContent": true,
+        "displayMessage": "Great coverage tonight",
+        "textMessageDetails": {
+          "messageText": "Great coverage tonight"
+        }
+      },
+      "authorDetails": {
+        "channelId": "UC_synthetic_alice",
+        "channelUrl": "http://www.youtube.com/channel/UC_synthetic_alice",
+        "displayName": "Alice",
+        "profileImageUrl": "https://example.invalid/avatar.png",
+        "isVerified": true,
+        "isChatOwner": false,
+        "isChatSponsor": false,
+        "isChatModerator": false
+      }
+    }
+  ]
+}
