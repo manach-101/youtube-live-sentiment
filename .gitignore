@@ -13,3 +13,5 @@ raw/
 .DS_Store
 # Generated processed and analytics data
 data/
+.pytest_cache/
+*.tmp
